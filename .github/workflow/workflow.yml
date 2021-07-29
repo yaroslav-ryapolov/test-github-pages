@@ -1,0 +1,43 @@
+name: Github Pages Deploy
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [15.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
+
+#      - name: Set the version in package.json
+#        run: find ./package.json -type f -exec sed -i ''s,99\.99\.99,${{ steps.get_version.outputs.VERSION }},g'' {} \;
+#
+#      - name: Show package.json
+#        run: cat ./package.json
+#
+      - name: Set the version version.ts
+        run: find ./src/version.ts -type f -exec sed -i ''s,#dev_version#,${{ steps.get_version.outputs.VERSION }},g'' {} \;
+
+      - name: Show version.ts
+        run: cat ./src/version.ts
+
+      - name: Install and build
+        run: npm install && npm run build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: build

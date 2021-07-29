@@ -1,0 +1,1 @@
+export let appVersion = "#dev_version#";
