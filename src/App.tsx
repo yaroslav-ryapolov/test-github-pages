@@ -8,11 +8,9 @@ function App() {
       .then(function(response) {
         response.text()
             .then((rawVersion: string) => {
-                console.log("VERSION", rawVersion);
-
                 rawVersion = rawVersion.trim();
                 if (rawVersion !== appVersion) {
-                    // window.location.replace(`#?v=${text}`);
+                    window.location.replace(`#?v=${rawVersion}`);
                 }
             });
       });
