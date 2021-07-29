@@ -3,17 +3,21 @@ import logo from './logo.svg';
 import './App.css';
 import {appVersion} from "./version";
 
+function goToVersionedUrlIfOutdated() {
+    fetch("https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt", {cache: "no-store"})
+        .then(function(response) {
+            response.text()
+                .then((rawVersion: string) => {
+                    rawVersion = rawVersion.trim();
+                    if (rawVersion !== appVersion) {
+                        window.location.replace(`#?v=${rawVersion}`);
+                    }
+                });
+        });
+}
+
 function App() {
-  fetch("https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt")
-      .then(function(response) {
-        response.text()
-            .then((rawVersion: string) => {
-                rawVersion = rawVersion.trim();
-                if (rawVersion !== appVersion) {
-                    window.location.replace(`#?v=${rawVersion}`);
-                }
-            });
-      });
+    goToVersionedUrlIfOutdated();
 
   return (
     <div className="App">
