@@ -21,17 +21,17 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
 
-#      - name: Set the version in package.json
-#        run: find ./package.json -type f -exec sed -i ''s,99\.99\.99,${{ steps.get_version.outputs.VERSION }},g'' {} \;
-#
-#      - name: Show package.json
-#        run: cat ./package.json
-#
       - name: Set the version version.ts
         run: find ./src/version.ts -type f -exec sed -i ''s,#dev_version#,${{ steps.get_version.outputs.VERSION }},g'' {} \;
 
-      - name: Show version.ts
-        run: cat ./src/version.ts
+#      - name: Show version.ts
+#        run: cat ./src/version.ts
+
+      - name: Set the version version.ts
+        run: find ./src/version.txt -type f -exec sed -i ''s,#dev_version#,${{ steps.get_version.outputs.VERSION }},g'' {} \;
+
+#      - name: Show version.ts
+#        run: cat ./src/version.ts
 
       - name: Install and build
         run: npm install && npm run build

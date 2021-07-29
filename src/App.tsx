@@ -4,6 +4,19 @@ import './App.css';
 import {appVersion} from "./version";
 
 function App() {
+  fetch("https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt")
+      .then(function(response) {
+        response.text()
+            .then((rawVersion: string) => {
+                console.log("VERSION", rawVersion);
+
+                rawVersion = rawVersion.trim();
+                if (rawVersion !== appVersion) {
+                    // window.location.replace(`#?v=${text}`);
+                }
+            });
+      });
+
   return (
     <div className="App">
       <header className="App-header">
