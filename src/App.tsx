@@ -20,7 +20,7 @@ function goToTimestampedUrlIfOutdated() {
         return;
     }
 
-    fetch(`${window.location.pathname}/versions/${appVersion}.txt`)
+    fetch(`${window.location.pathname}/versions/${appVersion}.txt`, { cache: "no-cache" })
         .then(response => {
             if (!response.ok && response.status === 404) {
                 const searchParams = new URLSearchParams(window.location.search);
