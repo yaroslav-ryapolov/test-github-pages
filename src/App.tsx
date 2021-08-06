@@ -6,9 +6,10 @@ import {appVersion} from "./version";
 function goToVersionedUrlIfOutdated() {
     fetch("https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt",
         {
-                cache: "no-store",
                 headers: {
                     "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Pragma": "no-cache",
+                    "Expires": "0",
                 },
             })
         .then(function(response) {
