@@ -27,11 +27,11 @@ jobs:
       - name: Show version.ts
         run: cat ./src/version.ts
 
-      - name: Set the version version.txt
-        run: find ./public/version.txt -type f -exec sed -i ''s,#dev_version#,${{ steps.get_version.outputs.VERSION }},g'' {} \;
+      - name: Create version/<version_number>.v file
+        run: touch ./public/versions/${{ steps.get_version.outputs.VERSION }}.v
 
-      - name: Show version.ts
-        run: cat ./src/version.ts
+      - name: List versions
+        run: ls ./public/versions
 
       - name: Install and build
         run: npm install && npm run build
