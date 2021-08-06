@@ -4,13 +4,20 @@ import './App.css';
 import {appVersion} from "./version";
 
 function goToVersionedUrlIfOutdated() {
-    fetch("https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt", {cache: "no-store"})
+    fetch("https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt",
+        {
+                cache: "no-store",
+                headers: {
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                },
+            })
         .then(function(response) {
             response.text()
                 .then((rawVersion: string) => {
                     rawVersion = rawVersion.trim();
                     if (rawVersion !== appVersion) {
                         window.location.replace(`#?v=${rawVersion}`);
+                        // window.location.reload(true);
                     }
                 });
         });
