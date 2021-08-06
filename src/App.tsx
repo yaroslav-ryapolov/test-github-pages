@@ -4,12 +4,7 @@ import './App.css';
 import {appVersion} from "./version";
 
 function goToVersionedUrlIfOutdated() {
-    fetch("https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt",
-        {
-                headers: {
-                    "Cache-Control": "no-store",
-                },
-            })
+    fetch(`https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt?timestamp=${new Date().getTime()}`)
         .then(function(response) {
             response.text()
                 .then((rawVersion: string) => {
