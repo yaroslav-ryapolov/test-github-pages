@@ -7,7 +7,7 @@ function goToVersionedUrlIfOutdated() {
     fetch(`${window.location.pathname}/version.txt?t=${new Date().getTime()}`,
         {
             headers: {
-                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
                 "Pragma": "no-cache",
                 "Expires": "0",
             },
