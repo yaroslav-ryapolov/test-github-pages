@@ -28,7 +28,7 @@ jobs:
         run: cat ./src/version.ts
 
       - name: Create version/<version_number>.v file
-        run: touch ./public/versions/${{ steps.get_version.outputs.VERSION }}.v
+        run: touch ./public/versions/${{ steps.get_version.outputs.VERSION }}.txt
 
       - name: List versions
         run: ls ./public/versions

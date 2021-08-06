@@ -1,1 +1,1 @@
-This folder is to store files named like <version_number>.v. 
+This folder is to store files named like &lt;version_number&gt;.txt. 
