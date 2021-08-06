@@ -6,9 +6,7 @@ import {appVersion} from "./version";
 function goToVersionedUrlIfOutdated() {
     fetch(`https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt?timestamp=${new Date().getTime()}`,
         {
-            headers: {
-                "cache-control": "max-age=0"
-            },
+            cache: "no-cache",
         })
         .then(function(response) {
             response.text()
