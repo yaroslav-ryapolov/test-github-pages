@@ -4,18 +4,26 @@ import './App.css';
 import {appVersion} from "./version";
 
 function goToVersionedUrlIfOutdated() {
-    fetch(`https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt?timestamp=${new Date().getTime()}`,
+    fetch(`${window.location.pathname}/version.txt?t=${new Date().getTime()}`,
         {
-            cache: "no-cache",
+            headers: {
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0",
+            },
         })
-        .then(function(response) {
-            response.text()
-                .then((rawVersion: string) => {
-                    rawVersion = rawVersion.trim();
-                    if (rawVersion !== appVersion) {
-                        window.location.replace(`#?v=${rawVersion}`);
-                    }
-                });
+        .then(response => response.text())
+        .then(rawVersion => {
+            rawVersion = rawVersion.trim();
+            if (rawVersion !== appVersion) {
+                if ('URLSearchParams' in window) {
+                    let searchParams = new URLSearchParams(window.location.search);
+                    searchParams.set("v", rawVersion);
+                    window.location.search = searchParams.toString();
+                } else {
+                    window.location.replace(`#?v=${rawVersion}`);
+                }
+            }
         });
 }
 
