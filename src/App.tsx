@@ -8,8 +8,6 @@ function goToVersionedUrlIfOutdated() {
         {
                 headers: {
                     "Cache-Control": "no-store",
-                    "Pragma": "no-cache",
-                    "Expires": "0",
                 },
             })
         .then(function(response) {
