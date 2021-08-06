@@ -11,7 +11,6 @@ function goToVersionedUrlIfOutdated() {
                     rawVersion = rawVersion.trim();
                     if (rawVersion !== appVersion) {
                         window.location.replace(`#?v=${rawVersion}`);
-                        // window.location.reload(true);
                     }
                 });
         });
