@@ -4,16 +4,14 @@ import './App.css';
 import {appVersion} from "./version";
 
 function renewTimestampIfLongerThanSecond() {
+    const now = Date.now();
     const searchParams = new URLSearchParams(window.location.search);
     const tString = searchParams.get("t");
-    if (tString !== null) {
-        const tValue = parseInt(tString);
-        const now = Date.now();
+    const tValue = tString !== null ? parseInt(tString) : now - 2000;
 
-        if (now - tValue > 1000) {
-            searchParams.set("t", `${new Date().getTime()}`);
-            window.location.search = searchParams.toString();
-        }
+    if (now - tValue > 1000) {
+        searchParams.set("t", `${new Date().getTime()}`);
+        window.location.search = searchParams.toString();
     }
 }
 
