@@ -3,44 +3,35 @@ import logo from './logo.svg';
 import './App.css';
 import {appVersion} from "./version";
 
-function renewTimestampIfLongerThanSecond() {
-    const now = Date.now();
-    const searchParams = new URLSearchParams(window.location.search);
-    const tString = searchParams.get("t");
-    const tValue = tString !== null ? parseInt(tString) : now - 2000;
-
-    if (now - tValue > 1000) {
-        searchParams.set("t", `${new Date().getTime()}`);
-        window.location.search = searchParams.toString();
-    }
-}
-
-// function goToVersionedUrlIfOutdated() {
-//     fetch(`${window.location.pathname}/version.txt?t=${new Date().getTime()}`,
-//         {
-//             headers: {
-//                 "Cache-Control": "no-cache, no-store, must-revalidate",
-//                 "Pragma": "no-cache",
-//                 "Expires": "0",
-//             },
-//         })
-//         .then(response => response.text())
-//         .then(rawVersion => {
-//             rawVersion = rawVersion.trim();
-//             if (rawVersion !== appVersion) {
-//                 if ('URLSearchParams' in window) {
-//                     let searchParams = new URLSearchParams(window.location.search);
-//                     searchParams.set("v", rawVersion);
-//                     window.location.search = searchParams.toString();
-//                 } else {
-//                     window.location.replace(`#?v=${rawVersion}`);
-//                 }
-//             }
-//         });
+// function renewTimestampIfLongerThanSecond() {
+//     const now = Date.now();
+//     const searchParams = new URLSearchParams(window.location.search);
+//     const tString = searchParams.get("t");
+//     const tValue = tString !== null ? parseInt(tString) : now - 2000;
+//
+//     if (now - tValue > 1000) {
+//         searchParams.set("t", `${new Date().getTime()}`);
+//         window.location.search = searchParams.toString();
+//     }
 // }
 
+function goToTimestampedUrlIfOutdated() {
+    if (appVersion === "#dev_version#") {
+        return;
+    }
+
+    fetch(`${window.location.pathname}/versions/${appVersion}.txt`)
+        .then(response => {
+            if (!response.ok && response.status === 404) {
+                const searchParams = new URLSearchParams(window.location.search);
+                searchParams.set("t", `${new Date().getTime()}`);
+                window.location.search = searchParams.toString();
+            }
+        });
+}
+
 function App() {
-    renewTimestampIfLongerThanSecond();
+    goToTimestampedUrlIfOutdated();
 
   return (
     <div className="App">
