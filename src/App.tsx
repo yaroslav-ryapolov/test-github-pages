@@ -7,7 +7,7 @@ function goToVersionedUrlIfOutdated() {
     fetch("https://raw.githubusercontent.com/yaroslav-ryapolov/test-github-pages/gh-pages/version.txt",
         {
                 headers: {
-                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Cache-Control": "no-store",
                     "Pragma": "no-cache",
                     "Expires": "0",
                 },
