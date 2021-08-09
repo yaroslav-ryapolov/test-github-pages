@@ -15,12 +15,16 @@ import {appVersion} from "./version";
 //     }
 // }
 
+function removeTrailingSlash(url: string): string {
+    return url.replace(/\/$/, "");
+}
+
 function goToTimestampedUrlIfOutdated() {
     if (appVersion === "#dev_version#") {
         return;
     }
 
-    fetch(`${window.location.pathname}/versions/${appVersion}.txt`, { cache: "no-cache" })
+    fetch(`${removeTrailingSlash(window.location.pathname)}/versions/${appVersion}.txt?t=${Date.now()}`, { cache: "no-cache" })
         .then(response => {
             if (!response.ok && response.status === 404) {
                 const searchParams = new URLSearchParams(window.location.search);
